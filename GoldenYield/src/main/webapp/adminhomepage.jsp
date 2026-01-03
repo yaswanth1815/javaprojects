@@ -5,7 +5,9 @@
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 <title>Agent Dashboard</title>
+
 <style>
+/* ================= BASE ================= */
 body {
   margin: 0;
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
@@ -16,15 +18,15 @@ body {
   overflow: hidden;
 }
 
-/* Navbar */
+/* ================= NAVBAR ================= */
 .navbar {
   width: 100%;
   background-color: #2c3e50;
-  padding: 15px 20px;
+  padding: 14px 20px;
   display: flex;
-  justify-content: space-between;
   align-items: center;
-  position: relative; 
+  justify-content: space-between;
+  position: relative;
   box-shadow: 0 2px 4px rgba(0,0,0,0.1);
 }
 
@@ -32,19 +34,16 @@ body {
   display: flex;
   align-items: center;
   gap: 20px;
-  flex: 1;
 }
 
-.navbar .left-text {
-  font-size: 33px;
+.left-text {
+  font-size: 30px;
   font-weight: bold;
   color: white;
-  font-family: Arial, sans-serif;
   white-space: nowrap;
 }
 
 .nav-buttons {
-  margin-left:30px;
   display: flex;
   gap: 12px;
 }
@@ -58,63 +57,85 @@ body {
   cursor: pointer;
   font-size: 14px;
   font-weight: 600;
-  transition: all 0.3s ease;
+  transition: 0.3s;
   white-space: nowrap;
 }
 
 .nav-buttons button:hover {
-  background: linear-gradient(135deg, #00897b, #00695c);
   transform: scale(1.05);
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
 }
 
-.navbar .center-text {
+/* Center welcome text */
+.center-text {
   position: absolute;
-  left: 60%;
+  left: 50%;
   transform: translateX(-50%);
-  font-size: 20px;
+  font-size: 18px;
   font-weight: bold;
   color: white;
   white-space: nowrap;
-  pointer-events: none;
 }
 
-.navbar .right-section {
+/* Right section */
+.right-section {
   display: flex;
   align-items: center;
-  gap: 15px;
+  gap: 14px;
   color: white;
-  font-size: 14px;
-  white-space: nowrap;
-  flex-shrink: 0;
 }
 
-.navbar .logout-btn {
+.logout-btn {
   background-color: #e74c3c;
   border: none;
-  margin-right:70px;
-  padding: 6px 12px;
+  padding: 6px 14px;
   color: white;
   border-radius: 5px;
   cursor: pointer;
-  font-size: 14px;
-  transition: background-color 0.3s ease;
 }
 
-.navbar .logout-btn:hover {
-  background-color: #c0392b;
-}
-
-/* Main content */
-.main-area {
+/* ================= MOBILE MENU ================= */
+.mobile-toggle {
   display: none;
-  flex-grow: 1;
-  height: calc(100vh - 60px);
+  font-size: 26px;
+  color: white;
+  cursor: pointer;
 }
+
+.mobile-menu {
+  display: none;
+  position: absolute;
+  top: 58px;
+  right: 15px;
+  background: white;
+  border-radius: 8px;
+  box-shadow: 0 6px 18px rgba(0,0,0,0.25);
+  overflow: hidden;
+  z-index: 1000;
+}
+
+.mobile-menu button {
+  width: 100%;
+  padding: 12px 18px;
+  border: none;
+  background: white;
+  font-weight: 600;
+  cursor: pointer;
+  text-align: left;
+}
+
+.mobile-menu button:hover {
+  background: #f2f2f2;
+}
+
+/* ================= MAIN LAYOUT ================= */
+.main-area,
+.main-area1 {
+  flex-grow: 1;
+  display: none;
+}
+
 .main-area1 {
   display: flex;
-  flex-grow: 1;
-  height: calc(100vh - 60px);
 }
 
 .sidebar {
@@ -129,20 +150,18 @@ body {
 
 .sidebar button {
   width: 200px;
-  margin: 10px 0;
+  margin: 8px 0;
   padding: 12px;
-  font-size: 16px;
+  font-size: 15px;
   border: none;
   border-radius: 8px;
   background-color: #34495e;
   color: white;
   cursor: pointer;
-  transition: background-color 0.3s, transform 0.2s;
 }
 
 .sidebar button:hover {
   background-color: #1abc9c;
-  transform: translateX(5px);
 }
 
 .content {
@@ -155,112 +174,108 @@ iframe {
   border: none;
 }
 
-/* Footer (added) */
+/* ================= FOOTER ================= */
 .footer {
-  position: fixed;
-  left: 0;
-  right: 0;
-  bottom: 0;
   background-color: #2c3e50;
-  color: #ecf0f1;
+  color: white;
   text-align: center;
-  padding: 10px 15px;
-  font-size: 14px;
-  z-index: 1000;
+  padding: 10px;
 }
 
+/* ================= RESPONSIVE (ONLY MOBILE) ================= */
 @media (max-width: 768px) {
-  .main-area {
-    flex-direction: column;
+
+  .center-text {
+    display: none;
   }
+
+  .nav-buttons {
+    display: none;
+  }
+
+  .mobile-toggle {
+    display: block;
+  }
+
   .sidebar {
-    width: 100%;
-    flex-direction: row;
-    flex-wrap: wrap;
-    justify-content: center;
-    padding: 20px 10px;
+    width: 180px;
+    padding: 8px;
   }
+
   .sidebar button {
-    width: 45%;
-    margin: 8px;
-  }
-  iframe {
-    height: calc(100vh - 60px - 200px);
+    width: 160px;
+    font-size: 13px;
+    padding: 8px;
   }
 }
 </style>
 </head>
+
 <body>
 
-<!-- Navbar -->
+<!-- ================= NAVBAR ================= -->
 <div class="navbar">
+
   <div class="navbar-left">
     <span class="left-text">GoldenYield</span>
+
     <div class="nav-buttons">
       <button id="frame-agent">Agents</button>
       <button id="frame-transport">Transport</button>
       <button id="frame-farmers">Farmers</button>
     </div>
   </div>
+
   <span class="center-text">"Welcome — Operations at Your Fingertips"</span>
+
   <div class="right-section">
     <span id="login-time"></span>
-    <button class="logout-btn" onclick="window.location.href='loginform.jsp';">Logout</button>
+    <button class="logout-btn" onclick="window.location.href='loginform.jsp'">Logout</button>
+    <span class="mobile-toggle" onclick="toggleMobileMenu()">☰</span>
+  </div>
+
+  <!-- Mobile dropdown -->
+  <div class="mobile-menu" id="mobileMenu">
+    <button onclick="document.getElementById('frame-agent').click()">Agents</button>
+    <button onclick="document.getElementById('frame-transport').click()">Transport</button>
+    <button onclick="document.getElementById('frame-farmers').click()">Farmers</button>
   </div>
 </div>
 
-<!-- AGENT SECTION -->
+<!-- ================= AGENT ================= -->
 <div class="main-area1" id="agent-buttons">
   <div class="sidebar">
     <button onclick="loadPage('addagent.jsp','agentFrame')">Add Agent</button>
     <button onclick="loadPage('deleteagent.jsp','agentFrame')">Delete Agent</button>
-    <button onclick="loadPage('showagentrecordsservlet','agentFrame')">Show All Agents</button>
-    <button onclick="loadPage('acquireagents.jsp','agentFrame')">Need for Agents</button>
-    <button onclick="loadPage('settledagenttransactions.jsp','agentFrame')">Settled Transactions</button>
-    <button onclick="loadPage('ongoingagenttransactions.jsp','agentFrame')">Ongoing Transactions</button>
-    <button onclick="loadPage('pendingagnettransactions.jsp','agentFrame')">Pending Transactions</button>
-    <button onclick="loadPage('sendagentnotifications.jsp','agentFrame')">Send Notifications</button>
+    <button onclick="loadPage('showagentrecordsservlet','agentFrame')">Show Agents</button>
   </div>
   <div class="content">
     <iframe id="agentFrame"></iframe>
   </div>
 </div>
 
-<!-- TRANSPORT SECTION -->
+<!-- ================= TRANSPORT ================= -->
 <div class="main-area" id="transport-buttons">
   <div class="sidebar">
     <button onclick="loadPage('addvehicle.jsp','transportFrame')">Add Vehicle</button>
-    <button onclick="loadPage('deletevehicle.jsp','transportFrame')">Delete Vehicle</button>
-    <button onclick="loadPage('showvehiclerecordsservlet','transportFrame')">Show All Vehicles</button>
-    <button onclick="loadPage('acquireagents.jsp','transportFrame')">Transaction Requests</button>
-    <button onclick="loadPage('settledagenttransactions.jsp','transportFrame')">Settled Transactions</button>
-    <button onclick="loadPage('ongoingagenttransactions.jsp','transportFrame')">Ongoing Transactions</button>
-    <button onclick="loadPage('pendingagnettransactions.jsp','transportFrame')">Failed Transactions</button>
-    <button onclick="loadPage('sendagentnotifications.jsp','transportFrame')">Send Notifications</button>
+    <button onclick="loadPage('showvehiclerecordsservlet','transportFrame')">Show Vehicles</button>
   </div>
   <div class="content">
     <iframe id="transportFrame"></iframe>
   </div>
 </div>
 
-<!-- FARMER SECTION -->
+<!-- ================= FARMER ================= -->
 <div class="main-area" id="farmer-buttons">
   <div class="sidebar">
     <button onclick="loadPage('addseller.jsp','farmerFrame')">Add Farmer</button>
-    <button onclick="loadPage('deletefarmer.jsp','farmerFrame')">Delete Farmer</button>
-    <button onclick="loadPage('showfarmerrecordsservlet','farmerFrame')">Show All Farmers</button>
-    <button onclick="loadPage('settledagenttransactions.jsp','farmerFrame')">Settled Transactions</button>
-    <button onclick="loadPage('ongoingagenttransactions.jsp','farmerFrame')">Ongoing Transactions</button>
-    <button onclick="loadPage('pendingagnettransactions.jsp','farmerFrame')">Pending Transactions</button>
-    <button onclick="loadPage('sendagentnotifications.jsp','farmerFrame')">Send Notifications</button>
-    <button onclick="loadPage('setcroprates.jsp','farmerFrame')">Set Values</button>
+    <button onclick="loadPage('showfarmerrecordsservlet','farmerFrame')">Show Farmers</button>
   </div>
   <div class="content">
     <iframe id="farmerFrame"></iframe>
   </div>
 </div>
 
-<!-- Footer (added) -->
 <div class="footer">
   &copy; 2025 GoldenYield. All Rights Reserved.
 </div>
@@ -272,23 +287,28 @@ function closeall(){
   document.getElementById("farmer-buttons").style.display="none";
 }
 
-document.getElementById("frame-agent").addEventListener("click",function(){
+document.getElementById("frame-agent").onclick = function(){
   closeall();
-  document.getElementById("agent-buttons").style.display = "flex";
-});
+  document.getElementById("agent-buttons").style.display="flex";
+};
 
-document.getElementById("frame-transport").addEventListener("click",function(){
+document.getElementById("frame-transport").onclick = function(){
   closeall();
-  document.getElementById("transport-buttons").style.display = "flex";
-});
+  document.getElementById("transport-buttons").style.display="flex";
+};
 
-document.getElementById("frame-farmers").addEventListener("click",function(){
+document.getElementById("frame-farmers").onclick = function(){
   closeall();
-  document.getElementById("farmer-buttons").style.display = "flex";
-});
+  document.getElementById("farmer-buttons").style.display="flex";
+};
 
 function loadPage(url, frameId) {
   document.getElementById(frameId).src = url;
+}
+
+function toggleMobileMenu(){
+  const menu = document.getElementById("mobileMenu");
+  menu.style.display = menu.style.display === "block" ? "none" : "block";
 }
 
 document.getElementById("login-time").textContent =

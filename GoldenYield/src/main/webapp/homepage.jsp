@@ -3,200 +3,241 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Golden Yield - Crop Marketplace</title>
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-        }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Golden Yield | Crop Marketplace</title>
 
-        /* Global Background */
-        body {
-            background: url('https://t4.ftcdn.net/jpg/01/95/46/95/240_F_195469577_vQPdA2xEBmQuS7T6NCiGiicSCItwLNd6.jpg') no-repeat center center fixed;
-            background-size: cover;
-        }
+<style>
+/* RESET */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: "Segoe UI", system-ui, sans-serif;
+}
 
-        /* Overlay for readability */
-        body::before {
-            content: "";
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0, 0, 0, 0.6);
-            z-index: -1;
-        }
+/* BACKGROUND */
+body {
+    background: url("https://t4.ftcdn.net/jpg/01/95/46/95/240_F_195469577_vQPdA2xEBmQuS7T6NCiGiicSCItwLNd6.jpg")
+        no-repeat center center fixed;
+    background-size: cover;
+    color: white;
+}
 
-        /* Navbar */
-        nav {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            background-color: rgba(34, 139, 34, 0.9);
-            padding: 15px 50px;
-            color: white;
-        }
+/* DARK OVERLAY */
+body::before {
+    content: "";
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.6);
+    z-index: -1;
+}
 
-        nav .logo {
-            font-size: 28px;
-            font-weight: bold;
-        }
+/* NAVBAR */
+.navbar {
+    position: fixed;
+    top: 0;
+    width: 100%;
+    background: rgba(34, 139, 34, 0.95);
+    padding: 14px 40px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    z-index: 1000;
+}
 
-        nav ul {
-            list-style: none;
-            display: flex;
-            gap: 25px;
-        }
+/* LOGO */
+.logo {
+    font-size: 24px;
+    font-weight: 700;
+}
 
-        nav ul li a {
-            text-decoration: none;
-            color: white;
-            font-weight: 500;
-            transition: 0.3s;
-        }
+/* DESKTOP MENU */
+.nav-links {
+    list-style: none;
+    display: flex;
+    gap: 24px;
+}
 
-        nav ul li a:hover {
-            color: #ffeb3b;
-        }
+.nav-links a {
+    text-decoration: none;
+    color: white;
+    font-weight: 500;
+}
 
-        /* Hero Section */
-        .hero {
-            height: 80vh;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            flex-direction: column;
-            color: white;
-            text-align: center;
-            padding: 0 20px;
-        }
+.nav-links a:hover {
+    color: #ffeb3b;
+}
 
-        .hero h1 {
-            font-size: 55px;
-            text-shadow: 2px 2px 10px rgba(0,0,0,0.6);
-        }
+/* MENU CONTAINER */
+.menu-container {
+    position: relative;
+}
 
-        .hero p {
-            font-size: 22px;
-            margin-top: 15px;
-            max-width: 700px;
-            text-shadow: 2px 2px 8px rgba(0,0,0,0.6);
-        }
+/* HAMBURGER */
+.menu-toggle {
+    display: none;
+    font-size: 30px;
+    cursor: pointer;
+}
 
-        .hero button {
-            margin-top: 25px;
-            padding: 12px 30px;
-            background-color: #ffd700;
-            border: none;
-            font-size: 18px;
-            font-weight: bold;
-            cursor: pointer;
-            border-radius: 5px;
-            transition: 0.3s;
-        }
+/* MOBILE MENU */
+@media (max-width: 768px) {
+    .nav-links {
+        display: none;
+        position: absolute;
+        top: 45px;
+        right: 0;
+        background: rgba(34, 139, 34, 0.97);
+        flex-direction: column;
+        padding: 12px 18px;
+        border-radius: 8px;
+        width: max-content;
+        box-shadow: 0 6px 14px rgba(0,0,0,0.35);
+    }
 
-        .hero button:hover {
-            background-color: #ffeb3b;
-        }
+    .nav-links li {
+        padding: 8px 0;
+        white-space: nowrap;
+    }
 
-        /* Features Section */
-        .features {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 30px;
-            padding: 60px 50px;
-            text-align: center;
-        }
+    .nav-links.active {
+        display: flex;
+    }
 
-        .feature-card {
-            background: rgba(255, 255, 255, 0.85);
-            padding: 30px 20px;
-            border-radius: 15px;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-            transition: 0.3s;
-        }
+    .menu-toggle {
+        display: block;
+    }
+}
 
-        .feature-card:hover {
-            transform: translateY(-5px);
-        }
+/* HERO */
+.hero {
+    min-height: 85vh;
+    padding-top: 120px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding-inline: 20px;
+}
 
-        .feature-card img {
-            width: 80px;
-            margin-bottom: 15px;
-        }
+.hero h1 {
+    font-size: clamp(32px, 5vw, 56px);
+    font-weight: 700;
+}
 
-        .feature-card h3 {
-            margin-bottom: 10px;
-            color: #228B22;
-        }
+.hero p {
+    font-size: clamp(16px, 2.5vw, 22px);
+    margin-top: 14px;
+    max-width: 720px;
+    line-height: 1.6;
+}
 
-        /* Footer */
-        footer {
-            background-color: rgba(34, 139, 34, 0.9);
-            color: white;
-            text-align: center;
-            padding: 20px;
-            margin-top: 30px;
-        }
+.hero button {
+    margin-top: 28px;
+    padding: 14px 34px;
+    font-size: 16px;
+    font-weight: 600;
+    border: none;
+    border-radius: 6px;
+    background: #ffd700;
+    cursor: pointer;
+}
 
-        footer p {
-            margin-bottom: 8px;
-        }
-    </style>
+.hero button:hover {
+    background: #ffeb3b;
+}
+
+/* FEATURES */
+.features {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 30px;
+    padding: 60px 40px;
+}
+
+.feature-card {
+    background: rgba(255,255,255,0.9);
+    color: #222;
+    padding: 28px 22px;
+    border-radius: 14px;
+    text-align: center;
+    transition: transform 0.3s;
+}
+
+.feature-card:hover {
+    transform: translateY(-6px);
+}
+
+.feature-card h3 {
+    color: #228B22;
+    margin-bottom: 10px;
+}
+
+/* FOOTER */
+footer {
+    background: rgba(34, 139, 34, 0.95);
+    text-align: center;
+    padding: 20px;
+    font-size: 14px;
+}
+</style>
 </head>
+
 <body>
 
-    <!-- Navigation Bar -->
-    <nav>
-        <div class="logo">Golden Yield</div>
-        <ul>
+<!-- NAVBAR -->
+<nav class="navbar">
+    <div class="logo">Golden Yield</div>
+
+    <div class="menu-container">
+        <div class="menu-toggle" onclick="toggleMenu()">☰</div>
+        <ul class="nav-links" id="navLinks">
             <li><a href="#">Home</a></li>
             <li><a href="aboutpage.jsp">About</a></li>
             <li><a href="contactuspage.jsp">Contact</a></li>
             <li><a href="agentregistration.jsp">Apply</a></li>
             <li><a href="loginform.jsp">Login</a></li>
         </ul>
-    </nav>
-
-    <!-- Hero Section -->
-    <div class="hero">
-        <h1>Welcome to Golden Yield</h1>
-        <p>From Our Fields to Your Home – Fresh, Fair, and Farmer Direct</p>
-        <button>Start Selling</button>
     </div>
+</nav>
 
-    <!-- Features Section -->
-<!-- Features Section -->
+<!-- HERO -->
+<section class="hero">
+    <h1>Welcome to Golden Yield</h1>
+    <p>Contact Us to Begin Registration</p>
+    <pre>From our fields to your home — fresh, fair, and farmer-direct
+     agricultural trade.</pre>
+    <button>Start Selling</button>
+</section>
+
+<!-- FEATURES -->
 <section class="features">
     <div class="feature-card">
-        <img src="https://cdn-icons-png.flaticon.com/512/1139/1139646.png" alt="Sell Crops">
         <h3>Sell Your Crops</h3>
-        <p>Farmers can list their harvest and reach buyers across the region.</p>
+        <p>Farmers list harvests and reach buyers directly.</p>
     </div>
     <div class="feature-card">
-        <img src="https://cdn-icons-png.flaticon.com/512/2331/2331970.png" alt="Buy Crops">
         <h3>Buy Fresh Produce</h3>
-        <p>Buyers get farm-fresh crops directly from trusted local farmers.</p>
+        <p>Consumers get quality crops without middlemen.</p>
     </div>
     <div class="feature-card">
-        <img src="https://cdn-icons-png.flaticon.com/512/3135/3135706.png" alt="Market Updates">
         <h3>Market Updates</h3>
-        <p>Stay updated with crop prices, trends, and the best time to sell.</p>
+        <p>Live crop prices and demand insights.</p>
     </div>
 </section>
 
+<!-- FOOTER -->
+<footer>
+    &copy; 2025 Golden Yield. All rights reserved.
+</footer>
 
-    <!-- Footer -->
-    <footer>
-        <p>&copy; 2025 Golden Yield. All rights reserved.</p>
-        <p>Follow us on Facebook | Instagram | Twitter</p>
-    </footer>
+<script>
+function toggleMenu() {
+    document.getElementById("navLinks").classList.toggle("active");
+}
+</script>
 
 </body>
 </html>
-    
