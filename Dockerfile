@@ -1,7 +1,9 @@
-FROM openjdk:17-jre-slim
 
-COPY GoldenYield.war app.war
+FROM tomcat:9-jdk17
 
-EXPOSE $PORT
+COPY GoldenYield.war /usr/local/tomcat/webapps/ROOT.war
 
-CMD ["java", "-Dserver.port=$PORT", "-jar", "app.war"]
+EXPOSE 8080
+
+CMD ["catalina.sh", "run"]
+
