@@ -73,7 +73,7 @@
 <body>
   <div class="login-box">
     <h2>Enrolling New Agent</h2>
-    <form action="addagentservlet" method="post">
+    <form action="<%=request.getContextPath()%>/addagentservlet" method="post">
       <input type="number" name="agentid" placeholder="Agent ID" required>
       <input type="text" name="secretkey" placeholder="Secret Key" required>
       <input type="password" name="password" placeholder="Password" required>

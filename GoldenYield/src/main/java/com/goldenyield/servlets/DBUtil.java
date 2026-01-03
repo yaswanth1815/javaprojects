@@ -24,6 +24,8 @@ public class DBUtil {
             	pass="Blue@1434";
             	
             }
+            System.out.println("DB_URL = " + url);
+            System.out.println("DB_USER = " + user);
             return DriverManager.getConnection(url, user, pass);
         } catch (Exception e) {
             e.printStackTrace();

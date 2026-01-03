@@ -99,7 +99,7 @@
 <body>
     <div class="container">
         <h1>Send Notification</h1>
-        <form id="notificationFormagent">
+        <form id="<%=request.getContextPath()%>/notificationFormagent">
             <div class="form-group">
                 <label for="agentIds">Agent IDs to Include</label>
                 <input type="text" id="agentIds" name="agentIds" placeholder="e.g., All (or) 123,456,789" required pattern="[\d,\s]+">

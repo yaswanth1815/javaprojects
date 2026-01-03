@@ -70,7 +70,7 @@
 <body>
   <div class="login-box">
     <h2>Removing Seller</h2>
-    <form action="deletefarmerservlet" method="post">
+    <form action="<%=request.getContextPath()%>/deletefarmerservlet" method="post">
       <input type="number" name="sellerid" placeholder="Farmer ID" required>
       <input type="password" name="password" placeholder="Password" required>
       <%

@@ -70,7 +70,7 @@
 <body>
   <div class="login-box">
     <h2>Removing Agent</h2>
-    <form action="deletevehicleservlet" method="post">
+    <form action="<%=request.getContextPath()%>/deletevehicleservlet" method="post">
       <input type="number" name="vehicleid" placeholder="Vehicle ID" required>
       <input type="password" name="password" placeholder="Password" required>
       <%

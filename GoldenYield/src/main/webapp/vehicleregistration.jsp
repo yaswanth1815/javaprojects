@@ -228,7 +228,7 @@
 
     <div class="form-section">
         <h2>Driver Registration</h2>
-        <form id="vehicleregistration" action="vehicleregistrationservlet" method="POST">
+        <form id="<%=request.getContextPath()%>/vehicleregistration" action="vehicleregistrationservlet" method="POST">
             <label for="drivername">Driver Name:</label>
             <input type="text" id="drivername" name="drivername" required>
 

@@ -100,7 +100,7 @@
 <body>
     <div class="main-container">
         <h1>Enter Crop Index and Rates</h1>
-        <form action="cropratesServlet" method="post">
+        <form action="<%=request.getContextPath()%>/cropratesServlet" method="post">
             <div class="form-group">
                 <label for="crop-index">Crop Index</label>
                 <input type="text" id="crop-index" name="crop-index" placeholder="Enter crop index (e.g., +1.5,-0.5)" required>

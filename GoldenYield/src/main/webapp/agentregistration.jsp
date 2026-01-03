@@ -226,7 +226,7 @@
 
     <div class="form-section">
         <h2>Agent Registration</h2>
-        <form id="agentregistration" action="agentregistrationservlet" method="POST">
+        <form id="agentregistration" action="<%=request.getContextPath()%>/agentregistrationservlet" method="POST">
             <label for="name">Name:</label>
             <input type="text" id="name" name="name" required>
 

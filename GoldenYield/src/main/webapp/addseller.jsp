@@ -73,7 +73,7 @@
 <body>
   <div class="login-box">
     <h2>Enrolling New Farmer</h2>
-    <form action="addfarmerservlet" method="post">
+    <form action="<%=request.getContextPath()%>/addfarmerservlet" method="post">
       <input type="number" name="sellerid" placeholder="Farmer Id" required>
       <input type="text" name="secretkey" placeholder="Secret Key" required>
       <input type="password" name="password" placeholder="Password" required>

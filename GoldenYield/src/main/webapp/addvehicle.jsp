@@ -73,7 +73,7 @@
 <body>
   <div class="login-box">
     <h2>Enrolling New Vehicle</h2>
-    <form action="addvehicleservlet" method="post">
+    <form action="<%=request.getContextPath()%>/addvehicleservlet" method="post">
       <input type="number" name="vehicleid" placeholder="Vehicle ID" required>
       <input type="text" name="secretkey" placeholder="Secret Key" required>
       <input type="password" name="password" placeholder="Password" required>
