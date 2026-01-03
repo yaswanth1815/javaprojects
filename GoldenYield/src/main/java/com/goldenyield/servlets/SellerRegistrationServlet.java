@@ -2,11 +2,8 @@ package com.goldenyield.servlets;
 
 import java.io.IOException;
 import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import jakarta.servlet.ServletConfig;
-import jakarta.servlet.ServletContext;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
@@ -17,25 +14,7 @@ import jakarta.servlet.http.HttpServletResponse;
 public class SellerRegistrationServlet extends HttpServlet {
 
     private static final long serialVersionUID = 1L;
-    Connection conn = null;
     String message = null;
-
-    @Override
-    public void init(ServletConfig sc) throws ServletException {
-        super.init(sc);
-        ServletContext scx = sc.getServletContext();
-        String username = scx.getInitParameter("user");
-        String password = scx.getInitParameter("password");
-        String url = scx.getInitParameter("url");
-
-        try {
-            Class.forName("com.mysql.cj.jdbc.Driver");
-            conn = DriverManager.getConnection(url, username, password);
-        } catch (Exception e) {
-            System.out.println("Error in Creating Connection or Loading Driver: " + e);
-        }
-    }
-
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp)
             throws ServletException, IOException {
@@ -61,7 +40,7 @@ public class SellerRegistrationServlet extends HttpServlet {
         String secretKey = req.getParameter("secretkey");
         String password = req.getParameter("password");
 
-        try {
+        try(Connection conn=DBUtil.getConnection()) {
             long mobileNumber = Long.parseLong(mobile);
             long adhaarNumber = Long.parseLong(adhaar);
             int sellerAge = Integer.parseInt(age);

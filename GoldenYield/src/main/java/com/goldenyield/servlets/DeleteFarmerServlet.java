@@ -2,11 +2,8 @@ package com.goldenyield.servlets;
 
 import java.io.IOException;
 import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import jakarta.servlet.ServletConfig;
-import jakarta.servlet.ServletContext;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
@@ -17,24 +14,7 @@ import jakarta.servlet.http.HttpSession;
 @WebServlet("/deletefarmerservlet")
 
 public class DeleteFarmerServlet extends HttpServlet{
-	String message=null;
-	Connection conn=null;
-	@Override
-	public void init(ServletConfig sc) throws ServletException {
-		super.init(sc);
-		ServletContext scx=sc.getServletContext();
-		String username=scx.getInitParameter("user");
-		String password=scx.getInitParameter("password");
-		String url=scx.getInitParameter("url");
-		try {
-			Class.forName("com.mysql.cj.jdbc.Driver");
-			conn=DriverManager.getConnection(url,username,password);
-		} 
-		catch (Exception e) {
-			e.printStackTrace();
-		}
-	}
-	
+	String message=null;	
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) 
 			throws ServletException, IOException {
@@ -62,7 +42,7 @@ public class DeleteFarmerServlet extends HttpServlet{
 		
 		int sellerId=Integer.parseInt(sellerid);
 		int adminId=Integer.parseInt(adminid);
-		try {
+		try(Connection conn=DBUtil.getConnection()) {
 			conn.setAutoCommit(false);
 			PreparedStatement pstmt1=conn.prepareStatement(query1);
 			PreparedStatement pstmt2=conn.prepareStatement(query2);
@@ -100,16 +80,6 @@ public class DeleteFarmerServlet extends HttpServlet{
 			e.printStackTrace();
 		}
 	}
-		@Override
-		public void destroy() {
-			try {
-				if(conn!=null) {
-					conn.close();
-				}
-			} 
-			catch (Exception e) {
-				e.printStackTrace();
-			}
-		}
+
 		
 	}

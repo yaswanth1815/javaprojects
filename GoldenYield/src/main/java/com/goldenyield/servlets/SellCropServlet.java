@@ -19,25 +19,7 @@ import jakarta.servlet.http.HttpSession;
 
 @WebServlet("/sellcropservlet")
 public class SellCropServlet extends HttpServlet {
-	
-	Connection conn=null;
 	String message=null;
-	@Override
-	public void init(ServletConfig sc) throws ServletException {
-		super.init(sc);
-		ServletContext scx=sc.getServletContext();
-		String username=scx.getInitParameter("user");
-		String password=scx.getInitParameter("password");
-		String url=scx.getInitParameter("url");
-		try {
-			Class.forName("com.mysql.cj.jdbc.Driver");
-			conn=DriverManager.getConnection(url,username,password);
-		} 
-		catch (Exception e) {
-			e.printStackTrace();
-		}
-		
-	}
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) 
 			throws ServletException, IOException {
@@ -61,7 +43,7 @@ public class SellCropServlet extends HttpServlet {
 		String query2="insert into cropsellrequests (sellerid,expqtyfarmer,description,district,mandal,village,daterequested) "
 				+ "values(?,?,?,?,?,?,?)";
 		
-		try {
+		try(Connection conn=DBUtil.getConnection()) {
 			conn.setAutoCommit(false);
 			PreparedStatement pstmt1=conn.prepareStatement(query1);
 			pstmt1.setInt(1,sellerid);

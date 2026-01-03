@@ -2,13 +2,9 @@ package com.goldenyield.servlets;
 
 import java.io.IOException;
 import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-
-import jakarta.servlet.ServletConfig;
-import jakarta.servlet.ServletContext;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
@@ -18,26 +14,7 @@ import jakarta.servlet.http.HttpServletResponse;
 @WebServlet("/vehicleregistrationservlet")
 
 public class VehicleRegistrationServlet extends HttpServlet{
-	Connection conn=null;
 	String message=null;
-	@Override
-	public void init(ServletConfig sc) throws ServletException {
-		super.init(sc);
-		ServletContext scx=sc.getServletContext();
-		String username=scx.getInitParameter("user");
-		String password=scx.getInitParameter("password");
-		String url=scx.getInitParameter("url");
-		
-		try {
-			Class.forName("com.mysql.cj.jdbc.Driver");
-			conn=DriverManager.getConnection(url,username,password);
-		} 
-		catch (Exception e) {
-			System.out.println("Error in Creating Connection"+e);
-		}
-		
-		
-	}
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp)
 			throws ServletException, IOException {
@@ -62,7 +39,7 @@ public class VehicleRegistrationServlet extends HttpServlet{
 		int vehicleId=Integer.parseInt(secretid);
 		
 
-		try {
+		try(Connection conn=DBUtil.getConnection()) {
 			PreparedStatement pstmt1=conn.prepareStatement(query1);
 			PreparedStatement pstmt2=conn.prepareStatement(query2);
 			

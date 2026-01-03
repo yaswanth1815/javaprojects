@@ -3,11 +3,8 @@ package com.goldenyield.servlets;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.Statement;
-import jakarta.servlet.ServletConfig;
-import jakarta.servlet.ServletContext;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
@@ -18,23 +15,6 @@ import java.time.format.DateTimeFormatter;
 
 @WebServlet("/showagentrecordsservlet")
 public class ShowAgentRecordsServlet extends HttpServlet {
-    Connection conn = null;
-
-    @Override
-    public void init(ServletConfig sc) throws ServletException {
-        super.init(sc);
-        ServletContext scx = sc.getServletContext();
-        String username = scx.getInitParameter("user");
-        String password = scx.getInitParameter("password");
-        String url = scx.getInitParameter("url");
-        try {
-            Class.forName("com.mysql.cj.jdbc.Driver");
-            conn = DriverManager.getConnection(url, username, password);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
-
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp)
             throws ServletException, IOException {
@@ -116,7 +96,7 @@ public class ShowAgentRecordsServlet extends HttpServlet {
                         <tbody>
         """);
 
-        try {
+        try(Connection conn=DBUtil.getConnection()) {
             Statement stmt = conn.createStatement();
             ResultSet result = stmt.executeQuery(query1);
             DateTimeFormatter dtf1 = DateTimeFormatter.ofPattern("yyyy-MM-dd");

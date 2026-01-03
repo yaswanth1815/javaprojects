@@ -2,11 +2,8 @@ package com.goldenyield.servlets;
 
 import java.io.IOException;
 import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import jakarta.servlet.ServletConfig;
-import jakarta.servlet.ServletContext;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
@@ -18,23 +15,6 @@ import jakarta.servlet.http.HttpSession;
 
 public class AddVehicleServlet extends HttpServlet{
 	String message=null;
-	Connection conn=null;
-	@Override
-	public void init(ServletConfig sc) throws ServletException {
-		super.init(sc);
-		ServletContext scx=sc.getServletContext();
-		String username=scx.getInitParameter("user");
-		String password=scx.getInitParameter("password");
-		String url=scx.getInitParameter("url");
-		try {
-			Class.forName("com.mysql.cj.jdbc.Driver");
-			conn=DriverManager.getConnection(url,username,password);
-		} 
-		catch (Exception e) {
-			e.printStackTrace();
-		}
-		
-	}
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) 
 			throws ServletException, IOException {
@@ -59,7 +39,7 @@ public class AddVehicleServlet extends HttpServlet{
 		int vehicleId=Integer.parseInt(vehicleid);
 		int adminId=Integer.parseInt(adminid);
 		
-		try {
+		try(Connection conn=DBUtil.getConnection()) {
 			PreparedStatement pstmt1=conn.prepareStatement(query1);
 			PreparedStatement pstmt2=conn.prepareStatement(query2);
 			pstmt1.setInt(1,adminId);
@@ -93,16 +73,6 @@ public class AddVehicleServlet extends HttpServlet{
 			e.printStackTrace();
 		}
 	}
-	@Override
-	public void destroy() {
-		try {
-			if(conn!=null) {
-				conn.close();
-			}
-		} 
-		catch (Exception e) {
-			e.printStackTrace();
-		}
-	}
+	
 }
 
