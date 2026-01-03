@@ -18,7 +18,12 @@ public class DBUtil {
             String url = System.getenv("DB_URL");
             String user = System.getenv("DB_USER");
             String pass = System.getenv("DB_PASSWORD");
-
+            if(url==null) {
+            	url="jdbc:mysql://localhost:3306/goldenyield";
+            	user="root";
+            	pass="Blue@1434";
+            	
+            }
             return DriverManager.getConnection(url, user, pass);
         } catch (Exception e) {
             e.printStackTrace();

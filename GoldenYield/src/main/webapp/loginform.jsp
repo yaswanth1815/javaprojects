@@ -231,7 +231,7 @@
         <h2>Welcome</h2>
         <p>Login to your account to continue</p>
 
-        <form action="loginservlet" method="POST">
+        <form action="loginservlet"  method="POST">
             <div class="radio-group">
                 <label><input type="radio" name="role" value="admin" required> Admin</label>
                 <label><input type="radio" name="role" value="seller"> Seller</label>
