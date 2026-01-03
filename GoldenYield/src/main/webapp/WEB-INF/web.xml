@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app xmlns="https://jakarta.ee/xml/ns/jakartaee"
+         version="6.0">
+  <display-name>GoldenYield</display-name>
+  <welcome-file-list>
+    <welcome-file>homepage.jsp</welcome-file>
+  </welcome-file-list>
+  <context-param>
+		<param-name>user</param-name>
+		<param-value>${DB_USER}</param-value>
+	</context-param>
+	<context-param>
+		<param-name>url</param-name>
+		<param-value>${DB_URL}</param-value>
+	</context-param>
+	<context-param>
+		<param-name>password</param-name>
+		<param-value>${DB_PASSWORD}</param-value>
+	</context-param>
+</web-app>
+
