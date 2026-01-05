@@ -20,20 +20,19 @@ body {
 
 /* ================= NAVBAR ================= */
 .navbar {
-  width: 100%;
   background-color: #2c3e50;
   padding: 14px 20px;
   display: flex;
   align-items: center;
   justify-content: space-between;
   position: relative;
-  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
 }
 
 .navbar-left {
   display: flex;
   align-items: center;
-  gap: 20px;
+  gap: 30px;     /* CHANGED: gap between GoldenYield text and 3 buttons */
+  flex: 1;
 }
 
 .left-text {
@@ -46,6 +45,7 @@ body {
 .nav-buttons {
   display: flex;
   gap: 12px;
+  margin-left: 0;   /* CHANGED: was auto; now stays beside GoldenYield */
 }
 
 .nav-buttons button {
@@ -55,33 +55,31 @@ body {
   padding: 8px 16px;
   border-radius: 8px;
   cursor: pointer;
-  font-size: 14px;
   font-weight: 600;
-  transition: 0.3s;
-  white-space: nowrap;
 }
 
-.nav-buttons button:hover {
-  transform: scale(1.05);
-}
-
-/* Center welcome text */
-.center-text {
-  position: absolute;
-  left: 50%;
-  transform: translateX(-50%);
-  font-size: 18px;
-  font-weight: bold;
-  color: white;
-  white-space: nowrap;
-}
-
-/* Right section */
 .right-section {
   display: flex;
   align-items: center;
-  gap: 14px;
+  gap: 10px;
   color: white;
+}
+
+#ops-text{
+  color: white;
+  font-weight: bold;
+  white-space: nowrap;
+  margin-left: 20px; /* gap between Farmers button and 'Welcome...' */
+}
+
+#login-time-label{
+  display: inline;
+  white-space: nowrap;
+}
+
+#login-time-value{
+  display: inline;
+  white-space: nowrap;
 }
 
 .logout-btn {
@@ -97,37 +95,61 @@ body {
 .mobile-toggle {
   display: none;
   font-size: 26px;
-  color: white;
   cursor: pointer;
+  color: white;
+}
+
+.mobile-actions-toggle{
+  display: none;
+  font-size: 26px;
+  cursor: pointer;
+  color: white;
 }
 
 .mobile-menu {
   display: none;
   position: absolute;
-  top: 58px;
-  right: 15px;
+  top: 60px;
+  left: 15px;   /* left side */
+  right: auto;  /* left side */
+  width: 270px;
+  max-height: 80vh;
+  overflow-y: auto;
   background: white;
   border-radius: 8px;
   box-shadow: 0 6px 18px rgba(0,0,0,0.25);
-  overflow: hidden;
   z-index: 1000;
+}
+
+/* CHANGED: force actions dropdown also to left side */
+#actionsMenu{
+  left: 15px;
+  right: auto;
+}
+
+.mobile-menu strong {
+  display: block;
+  padding: 10px;
+  background: #ecf0f1;
+  color: #2c3e50;
+  font-size: 14px;
 }
 
 .mobile-menu button {
   width: 100%;
-  padding: 12px 18px;
+  padding: 6px 10px;
   border: none;
   background: white;
-  font-weight: 600;
-  cursor: pointer;
   text-align: left;
+  cursor: pointer;
+  font-weight: 600;
 }
 
 .mobile-menu button:hover {
   background: #f2f2f2;
 }
 
-/* ================= MAIN LAYOUT ================= */
+/* ================= MAIN ================= */
 .main-area,
 .main-area1 {
   flex-grow: 1;
@@ -142,19 +164,16 @@ body {
   width: 250px;
   background-color: #2c3e50;
   color: white;
-  padding-top: 20px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
+  padding: 10px;
+  overflow-y: auto;
 }
 
 .sidebar button {
-  width: 200px;
-  margin: 8px 0;
-  padding: 12px;
-  font-size: 15px;
+  width: 100%;
+  margin: 6px 0;
+  padding: 10px;
   border: none;
-  border-radius: 8px;
+  border-radius: 6px;
   background-color: #34495e;
   color: white;
   cursor: pointer;
@@ -182,14 +201,23 @@ iframe {
   padding: 10px;
 }
 
-/* ================= RESPONSIVE (ONLY MOBILE) ================= */
-@media (max-width: 768px) {
-
-  .center-text {
+/* ================= WIDTH RULES ================= */
+@media (max-width: 1230px) {
+  #ops-text {
     display: none;
   }
+}
 
-  .nav-buttons {
+@media (max-width: 600px) {
+  #login-time-label{
+    display: none;
+  }
+}
+
+/* ================= MOBILE ================= */
+@media (max-width: 768px) {
+  .nav-buttons,
+  .sidebar {
     display: none;
   }
 
@@ -197,15 +225,8 @@ iframe {
     display: block;
   }
 
-  .sidebar {
-    width: 180px;
-    padding: 8px;
-  }
-
-  .sidebar button {
-    width: 160px;
-    font-size: 13px;
-    padding: 8px;
+  .mobile-actions-toggle {
+    display: block;
   }
 }
 </style>
@@ -217,6 +238,8 @@ iframe {
 <div class="navbar">
 
   <div class="navbar-left">
+    <span class="mobile-toggle" onclick="toggleMobileMenu()">☰</span>
+    <span class="mobile-actions-toggle" onclick="toggleActionsMenu()">⋮</span>
     <span class="left-text">GoldenYield</span>
 
     <div class="nav-buttons">
@@ -226,20 +249,64 @@ iframe {
     </div>
   </div>
 
-  <span class="center-text">"Welcome — Operations at Your Fingertips"</span>
-
   <div class="right-section">
-    <span id="login-time"></span>
-    <button class="logout-btn" onclick="window.location.href='loginform.jsp'">Logout</button>
-    <span class="mobile-toggle" onclick="toggleMobileMenu()">☰</span>
+    <span id="ops-text">Welcome — Operations at Your Fingertips</span>
+
+    <span id="login-time-label">Login Time:</span>
+    <span id="login-time-value"></span>
+
+    <button class="logout-btn" onclick="location.href='loginform.jsp'">Logout</button>
   </div>
 
-  <!-- Mobile dropdown -->
+  <!-- ================= MOBILE MENU 1: MAIN SECTIONS ONLY ================= -->
   <div class="mobile-menu" id="mobileMenu">
-    <button onclick="document.getElementById('frame-agent').click()">Agents</button>
-    <button onclick="document.getElementById('frame-transport').click()">Transport</button>
-    <button onclick="document.getElementById('frame-farmers').click()">Farmers</button>
+    <strong>Main Sections</strong>
+    <button onclick="frameAgent();">Agents</button>
+    <button onclick="frameTransport();">Transport</button>
+    <button onclick="frameFarmer();">Farmers</button>
   </div>
+
+  <!-- ================= MOBILE MENU 2: ACTIONS (ONLY FOR SELECTED SECTION) ================= -->
+  <div class="mobile-menu" id="actionsMenu">
+
+    <div id="actions-agent">
+      <strong>Agents</strong>
+      <button onclick="frameAgent(); loadPage('addagent.jsp','agentFrame');">Add Agent</button>
+      <button onclick="frameAgent(); loadPage('deleteagent.jsp','agentFrame');">Delete Agent</button>
+      <button onclick="frameAgent(); loadPage('showagentrecordsservlet','agentFrame');">Show All Agents</button>
+      <button onclick="frameAgent(); loadPage('acquireagents.jsp','agentFrame');">Need for Agents</button>
+      <button onclick="frameAgent(); loadPage('settledagenttransactions.jsp','agentFrame');">Settled Transactions</button>
+      <button onclick="frameAgent(); loadPage('ongoingagenttransactions.jsp','agentFrame');">Ongoing Transactions</button>
+      <button onclick="frameAgent(); loadPage('pendingagnettransactions.jsp','agentFrame');">Pending Transactions</button>
+      <button onclick="frameAgent(); loadPage('sendagentnotifications.jsp','agentFrame');">Send Notifications</button>
+    </div>
+
+    <div id="actions-transport">
+      <strong>Transport</strong>
+      <button onclick="frameTransport(); loadPage('addvehicle.jsp','transportFrame');">Add Vehicle</button>
+      <button onclick="frameTransport(); loadPage('deletevehicle.jsp','transportFrame');">Delete Vehicle</button>
+      <button onclick="frameTransport(); loadPage('showvehiclerecordsservlet','transportFrame');">Show All Vehicles</button>
+      <button onclick="frameTransport(); loadPage('acquireagents.jsp','transportFrame');">Transaction Requests</button>
+      <button onclick="frameTransport(); loadPage('settledagenttransactions.jsp','transportFrame');">Settled Transactions</button>
+      <button onclick="frameTransport(); loadPage('ongoingagenttransactions.jsp','transportFrame');">Ongoing Transactions</button>
+      <button onclick="frameTransport(); loadPage('pendingagnettransactions.jsp','transportFrame');">Failed Transactions</button>
+      <button onclick="frameTransport(); loadPage('sendagentnotifications.jsp','transportFrame');">Send Notifications</button>
+    </div>
+
+    <div id="actions-farmer">
+      <strong>Farmers</strong>
+      <button onclick="frameFarmer(); loadPage('addseller.jsp','farmerFrame');">Add Farmer</button>
+      <button onclick="frameFarmer(); loadPage('deletefarmer.jsp','farmerFrame');">Delete Farmer</button>
+      <button onclick="frameFarmer(); loadPage('showfarmerrecordsservlet','farmerFrame');">Show All Farmers</button>
+      <button onclick="frameFarmer(); loadPage('settledagenttransactions.jsp','farmerFrame');">Settled Transactions</button>
+      <button onclick="frameFarmer(); loadPage('ongoingagenttransactions.jsp','farmerFrame');">Ongoing Transactions</button>
+      <button onclick="frameFarmer(); loadPage('pendingagnettransactions.jsp','farmerFrame');">Pending Transactions</button>
+      <button onclick="frameFarmer(); loadPage('sendagentnotifications.jsp','farmerFrame');">Send Notifications</button>
+      <button onclick="frameFarmer(); loadPage('setcroprates.jsp','farmerFrame');">Set Values</button>
+    </div>
+
+  </div>
+
 </div>
 
 <!-- ================= AGENT ================= -->
@@ -247,72 +314,125 @@ iframe {
   <div class="sidebar">
     <button onclick="loadPage('addagent.jsp','agentFrame')">Add Agent</button>
     <button onclick="loadPage('deleteagent.jsp','agentFrame')">Delete Agent</button>
-    <button onclick="loadPage('showagentrecordsservlet','agentFrame')">Show Agents</button>
+    <button onclick="loadPage('showagentrecordsservlet','agentFrame')">Show All Agents</button>
+    <button onclick="loadPage('acquireagents.jsp','agentFrame')">Need for Agents</button>
+    <button onclick="loadPage('settledagenttransactions.jsp','agentFrame')">Settled Transactions</button>
+    <button onclick="loadPage('ongoingagenttransactions.jsp','agentFrame')">Ongoing Transactions</button>
+    <button onclick="loadPage('pendingagnettransactions.jsp','agentFrame')">Pending Transactions</button>
+    <button onclick="loadPage('sendagentnotifications.jsp','agentFrame')">Send Notifications</button>
   </div>
-  <div class="content">
-    <iframe id="agentFrame"></iframe>
-  </div>
+  <div class="content"><iframe id="agentFrame"></iframe></div>
 </div>
 
 <!-- ================= TRANSPORT ================= -->
 <div class="main-area" id="transport-buttons">
   <div class="sidebar">
     <button onclick="loadPage('addvehicle.jsp','transportFrame')">Add Vehicle</button>
-    <button onclick="loadPage('showvehiclerecordsservlet','transportFrame')">Show Vehicles</button>
+    <button onclick="loadPage('deletevehicle.jsp','transportFrame')">Delete Vehicle</button>
+    <button onclick="loadPage('showvehiclerecordsservlet','transportFrame')">Show All Vehicles</button>
+    <button onclick="loadPage('acquireagents.jsp','transportFrame')">Transaction Requests</button>
+    <button onclick="loadPage('settledagenttransactions.jsp','transportFrame')">Settled Transactions</button>
+    <button onclick="loadPage('ongoingagenttransactions.jsp','transportFrame')">Ongoing Transactions</button>
+    <button onclick="loadPage('pendingagnettransactions.jsp','transportFrame')">Failed Transactions</button>
+    <button onclick="loadPage('sendagentnotifications.jsp','transportFrame')">Send Notifications</button>
   </div>
-  <div class="content">
-    <iframe id="transportFrame"></iframe>
-  </div>
+  <div class="content"><iframe id="transportFrame"></iframe></div>
 </div>
 
 <!-- ================= FARMER ================= -->
 <div class="main-area" id="farmer-buttons">
   <div class="sidebar">
     <button onclick="loadPage('addseller.jsp','farmerFrame')">Add Farmer</button>
-    <button onclick="loadPage('showfarmerrecordsservlet','farmerFrame')">Show Farmers</button>
+    <button onclick="loadPage('deletefarmer.jsp','farmerFrame')">Delete Farmer</button>
+    <button onclick="loadPage('showfarmerrecordsservlet','farmerFrame')">Show All Farmers</button>
+    <button onclick="loadPage('settledagenttransactions.jsp','farmerFrame')">Settled Transactions</button>
+    <button onclick="loadPage('ongoingagenttransactions.jsp','farmerFrame')">Ongoing Transactions</button>
+    <button onclick="loadPage('pendingagnettransactions.jsp','farmerFrame')">Pending Transactions</button>
+    <button onclick="loadPage('sendagentnotifications.jsp','farmerFrame')">Send Notifications</button>
+    <button onclick="loadPage('setcroprates.jsp','farmerFrame')">Set Values</button>
   </div>
-  <div class="content">
-    <iframe id="farmerFrame"></iframe>
-  </div>
+  <div class="content"><iframe id="farmerFrame"></iframe></div>
 </div>
 
-<div class="footer">
-  &copy; 2025 GoldenYield. All Rights Reserved.
-</div>
+<div class="footer">© 2025 GoldenYield</div>
 
 <script>
+let currentSection = "agent";
+
 function closeall(){
   document.getElementById("agent-buttons").style.display="none";
   document.getElementById("transport-buttons").style.display="none";
   document.getElementById("farmer-buttons").style.display="none";
 }
 
-document.getElementById("frame-agent").onclick = function(){
+function showActionsFor(section){
+  document.getElementById("actions-agent").style.display = "none";
+  document.getElementById("actions-transport").style.display = "none";
+  document.getElementById("actions-farmer").style.display = "none";
+  document.getElementById("actions-" + section).style.display = "block";
+}
+
+function frameAgent(){
   closeall();
+  currentSection = "agent";
   document.getElementById("agent-buttons").style.display="flex";
-};
+  closeMobileMenus();
+}
 
-document.getElementById("frame-transport").onclick = function(){
+function frameTransport(){
   closeall();
+  currentSection = "transport";
   document.getElementById("transport-buttons").style.display="flex";
-};
+  closeMobileMenus();
+}
 
-document.getElementById("frame-farmers").onclick = function(){
+function frameFarmer(){
   closeall();
+  currentSection = "farmer";
   document.getElementById("farmer-buttons").style.display="flex";
-};
+  closeMobileMenus();
+}
 
-function loadPage(url, frameId) {
+document.getElementById("frame-agent").onclick = frameAgent;
+document.getElementById("frame-transport").onclick = frameTransport;
+document.getElementById("frame-farmers").onclick = frameFarmer;
+
+function loadPage(url, frameId){
   document.getElementById(frameId).src = url;
 }
 
 function toggleMobileMenu(){
   const menu = document.getElementById("mobileMenu");
-  menu.style.display = menu.style.display === "block" ? "none" : "block";
+  const actions = document.getElementById("actionsMenu");
+  actions.style.display = "none";
+  menu.style.display = (menu.style.display === "block") ? "none" : "block";
 }
 
-document.getElementById("login-time").textContent =
-  "Login Time: " + new Date().toLocaleTimeString();
+function toggleActionsMenu(){
+  const menu = document.getElementById("actionsMenu");
+  const main = document.getElementById("mobileMenu");
+  main.style.display = "none";
+  showActionsFor(currentSection);
+  menu.style.display = (menu.style.display === "block") ? "none" : "block";
+}
+
+function closeMobileMenus(){
+  document.getElementById("mobileMenu").style.display = "none";
+  document.getElementById("actionsMenu").style.display = "none";
+}
+
+function attachAutoClose(menuId){
+  const menu = document.getElementById(menuId);
+  menu.querySelectorAll("button").forEach(btn => {
+    btn.addEventListener("click", closeMobileMenus);
+  });
+}
+
+attachAutoClose("mobileMenu");
+attachAutoClose("actionsMenu");
+
+document.getElementById("login-time-value").textContent =
+  new Date().toLocaleTimeString();
 </script>
 
 </body>
